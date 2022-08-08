@@ -1,0 +1,34 @@
+description: >
+  Load a secret and save it into a file.
+  When using service token(token for specific project) its not required to specify project.
+  When using user personal token project is required.
+parameters:
+  secret:
+    description: >
+      Doppler secret to download.
+    type: string
+    default: ""
+  file:
+    description: >
+      Filename to use.
+    type: string
+    default: ""
+  project:
+    description: >
+      Doppler project to use when personal token is used.
+    type: string
+    default: ""
+  doppler_token:
+    description: >
+      Name of environment variable to access doppler token from.
+    type: env_var_name
+    default: DOPPLER_TOKEN
+steps:
+  - run:
+      environment:
+        DOPPLER_SECRET: <<parameters.secret>>
+        DOPPLER_FILE: <<parameters.file>>
+        DOPPLER_PROJECT: <<parameters.project>>
+        DOPPLER_TOKEN_NAME: <<parameters.doppler_token>>
+      name: Save a Doppler secret into a file
+      command: <<include(scripts/download_file.sh)>>

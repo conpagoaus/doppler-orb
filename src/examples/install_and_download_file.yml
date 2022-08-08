@@ -1,0 +1,21 @@
+description: |
+  Install doppler and download a file into circle ci environment
+
+usage:
+  version: 2.1
+  orbs:
+    doppler: conpago/doppler@x.y # where x.y is orb version
+  jobs:
+    install_and_download_file_example:
+      docker:
+        - image: cimg/base # this will use the latest version of the pact image
+      steps:
+        - checkout
+        - doppler/install
+        - doppler/download_file:
+            secret: GCP_SERVICE_ACCOUNT_JSON
+            file: gcp_credentials.json
+  workflows:
+    setup:
+      jobs:
+        - install_and_download_file_example
