@@ -24,7 +24,10 @@ workflows:
           orb-name: conpago/doppler
           vcs-type: << pipeline.project.type >>
           requires:
-            [orb-tools/lint, orb-tools/review, orb-tools/pack, shellcheck/check]
+            - orb-tools/lint
+            - orb-tools/review
+            - orb-tools/pack
+            - shellcheck/check
           # Use a context to hold your publishing token.
           context: orb-publishing
           filters: *filters
@@ -32,5 +35,6 @@ workflows:
       - orb-tools/continue:
           pipeline-number: << pipeline.number >>
           vcs-type: << pipeline.project.type >>
-          requires: [orb-tools/publish]
+          requires:
+            - orb-tools/publish
           filters: *filters
