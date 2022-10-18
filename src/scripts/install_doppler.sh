@@ -18,7 +18,7 @@ then
     sudo apt-get install -y gnupg
   elif command -v brew &> /dev/null
   then
-    brew install gnupg
+    HOMEBREW_NO_AUTO_UPDATE=1 brew install gnupg
   else
     echo "Please install gnupg before installing doppler. Unable to detect apt-get or homebrew"
     exit 1
