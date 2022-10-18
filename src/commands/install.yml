@@ -1,5 +1,5 @@
 description: >
-  Installs latest version of doppler.
+  Installs latest version of doppler. Supports linux(apt-get) and macos(brew) build agents.
 steps:
   - run:
       name: Install doppler
