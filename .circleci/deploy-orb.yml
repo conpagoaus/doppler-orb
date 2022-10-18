@@ -26,11 +26,29 @@ jobs:
               echo "DOPPLER_TEST_SECRET is not set"
               exit 1
             fi
+  command-tests-on-mac:
+    macos:
+      xcode: "13.4.0"
+    steps:
+      - checkout
+      # Run your orb's commands to validate them.
+      - doppler/install
+      - doppler/load_secrets:
+          doppler_token: DOPPLER_TOKEN_TEST
+      - run:
+          name: check if env variables are set
+          command: |
+            if [ -z "$DOPPLER_TEST_SECRET" ]; then
+              echo "DOPPLER_TEST_SECRET is not set"
+              exit 1
+            fi
 workflows:
   deploy-orb:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - command-tests:
+          filters: *filters
+      - command-tests-on-mac:
           filters: *filters
       - orb-tools/pack:
           filters: *filters
@@ -41,6 +59,7 @@ workflows:
           requires:
             - orb-tools/pack
             - command-tests
+            - command-tests-on-mac
           context: orb-publishing
           filters:
             branches:
